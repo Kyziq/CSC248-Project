@@ -1,4 +1,4 @@
-package Group;
+// Customer Info
 
 public class Customer {
     private int icNum; 
