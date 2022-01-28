@@ -59,8 +59,13 @@ public class mainApp {
             displayMenu(1); // Intro display
 
             int choice = input.nextInt();
+<<<<<<< HEAD
 
             if (choice == 1) // Add ticket
+=======
+            int adib;
+            if (choice == 1) 
+>>>>>>> 55b0d0fda7c1bf80ff4a90c45c60ae490053811b
             {
                 if (ticketType.isEmpty()) {
                     System.out.println("Do you prefer to buy (normal) ticket or (express) ticket");
