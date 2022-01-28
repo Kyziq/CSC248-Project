@@ -26,7 +26,6 @@ public class Payment {
         this.dateTicket = dateTicket;
         this.ticketType = ticketType;
     }
-
     // Getter Constructor
     public int getTotalPayment() {return totalPayment;}
     public String getDatePurchased () {return datePurchased;}

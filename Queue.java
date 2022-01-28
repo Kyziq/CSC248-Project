@@ -9,7 +9,7 @@ public class Queue extends LinkedList {
 	public Object dequeue() {
 		return removeFromFront();
 	}
-	
+
 	public Object getFront() {
 		
 		return getFirst();
