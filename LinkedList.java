@@ -103,33 +103,21 @@ public class LinkedList
 		}
 	}
 
-	public void deleteNode(int key) 
-	{
-		Node temp = first, prev=null;
-
-		// If head node itself holds the key to be deleted
-		if(temp != null && temp.data.equals(Integer.valueOf(key)))
-		{
-			first = temp.next;
-			return;
-		}
-
-		// Search for the key to be deleted, keep track of
-		// the previous node as we need to change temp.next
-		while(temp !=null && !temp.data.equals(Integer.valueOf(key)))
-		{
-			prev =temp;
-			temp = temp.next;
-		}
-		
-		// If key was not present in linked list
-		if(temp == null)
-		{
-			return;
-		}
-		
-		//Unlink the node from Linked List
-		prev.next = temp.next;
+	public void clear() {
+		first = current = last = null;
 	}
 
+	public Object set(int index, Object e) 
+	{
+		if (index < 0 || index > 0)
+			return null;
+		current = first;
+		for(int i=0; i<index; i++) {
+			current = current.next;
+		}
+		Node temp = current;
+		current.data = e;
+		return temp;
+	}
 }
+

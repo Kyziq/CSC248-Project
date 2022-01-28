@@ -27,7 +27,6 @@ c	The date of the purchase and the date of the ticket purchased by customer
 d	The total amount to be paid after discount
 
 */
-
 import java.util.Scanner;
 
 public class mainApp {
@@ -48,6 +47,9 @@ public class mainApp {
         final int childrenPriceExpress = 70;
         final int adultPriceExpress = 80;
 
+        // Discount
+        double discount;
+
         // Linked Lists
         LinkedList normalTicketInfo = new LinkedList();
         LinkedList expressTicketInfo = new LinkedList();
@@ -59,22 +61,26 @@ public class mainApp {
             displayMenu(1); // Intro display
 
             int choice = input.nextInt();
-<<<<<<< HEAD
 
             if (choice == 1) // Add ticket
-=======
-            int adib;
-            if (choice == 1) 
->>>>>>> 55b0d0fda7c1bf80ff4a90c45c60ae490053811b
             {
                 if (ticketType.isEmpty()) {
-                    System.out.println("Do you prefer to buy (normal) ticket or (express) ticket");
-                    ticketType = input.next();
+                    do {
+                        System.out.println("Do you prefer to buy (Normal) ticket or (Express) ticket");
+                        ticketType = input.next();
+        
+                        if (!ticketType.equalsIgnoreCase("Normal") && !ticketType.equalsIgnoreCase("Express")) {
+                            System.out.println("Invalid!");
+                        }
+                    }
+                    while (!ticketType.equalsIgnoreCase("Normal") && !ticketType.equalsIgnoreCase("Express"));
                 }
+
                 if (dateTicket.isEmpty()) {
                     System.out.println("Input date of ticket (YYYY-MM-DD): ");
                     dateTicket = input.next();
                 }
+
                 if (datePurchased.isEmpty()) {
                     System.out.println("Input date of ticket purchased (YYYY-MM-DD): ");
                     datePurchased = input.next();
@@ -89,6 +95,7 @@ public class mainApp {
                 System.out.println("Input the age: ");
                 int age = input.nextInt();
 
+                // Add headcount for easier calculation
                 if (age >= 2 && age < 18) {
                     countChildren++;
                 }
@@ -112,36 +119,50 @@ public class mainApp {
             }
             else if (choice == 2) // Remove
             {
+
+
+
+
+
+
+
+
+
                 continue;
             }
             else if (choice == 3) // Display
             {
-                /* Calculate Payment....
-
+                // Calculate Payment....
                 if(ticketType.equalsIgnoreCase("Normal"))
                 {
                     totalPayment = (countChildren * childrenPriceNormal ) + ( countAdult * adultPriceNormal );
 
-                    if (totalPayment >= 2)
+                    if (totalPayment > 200)
+                        discount = 0.17;
+                    else
+                        discount = 0.10;
+
+                    totalPayment = totalPayment * (1 - discount);
+
+                    Payment pay = (Payment) paymentInfo.getFirst(); // Get Info
+                    pay.setTotalPayment(totalPayment);
                 }
                 else if(ticketType.equalsIgnoreCase("Express"))
                 {
                     totalPayment = (countChildren * childrenPriceExpress ) + ( countAdult * adultPriceExpress );
+
+                    if (totalPayment > 200)
+                        discount = 0.17;
+                    else 
+                        discount = 0.10;
+
+                    totalPayment = totalPayment * (1 - discount);
                 }
-                
 
-                */
-
-
-                System.out.println("Display");
+                System.out.println("Genting SkyWorlds Theme Park Ticket List");
                 Customer Cus = null;
-                Payment Pay = null;
-
-                System.out.println("List tickets");
                 Object dataNormal  = normalTicketInfo.getFirst();
                 Object dataExpress = expressTicketInfo.getFirst();
-                Object dataPayment = paymentInfo.getFirst();
-                
                 //
                 if (!normalTicketInfo.isEmpty()) // For normal tickets
                 {
@@ -163,13 +184,12 @@ public class mainApp {
                 }
 
                 //
+                Payment Pay = null;
+                Object dataPayment = paymentInfo.getFirst();
+
                 System.out.println("Payment Info ");
-                while (dataPayment != null) // For payment informations
-                {
-                    Pay = (Payment) dataPayment;
-                    System.out.println(Pay.toStringPayment());
-                    dataPayment = paymentInfo.getNext();
-                }
+                Pay = (Payment) dataPayment;
+                System.out.println(Pay.toStringPayment());
 
                 break; // Out from loop
             }
@@ -184,8 +204,9 @@ public class mainApp {
             choice = input.nextInt();
         }
         input.close();
-        
     }
+
+    // functions
     private static void displayMenu(int menu) {
         if (menu == 1) {
             System.out.println("Welcome to Genting SkyWorlds Theme Park!");
@@ -211,10 +232,10 @@ public class mainApp {
 
     // Random number for ticket ids.
     private static int GenerateRandom () {
-        int min = 1;
-        int max = 1000;
+        int min = 1000;
+        int max = 9999;
 
-        //Generate random int value from 1 to 100 0
+        //Generate random int value from 1000 to 9999
         int random = (int)Math.floor(Math.random()*(max-min+1)+min);
         return random;
     }
