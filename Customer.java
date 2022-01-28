@@ -1,30 +1,29 @@
 // Customer Info
-
 public class Customer {
-    private int icNum; 
+    private String icNum; 
     private String name; 
     private int age; // Baby - <2 years, Children - 2-17years, Adult - 18-59years, Senior Adult - 60+years
 
     // Default Constructor
     public Customer() {
-        icNum = -1;
+        icNum = "";
         name = "";
         age = -1;
     }
     // Normal Constructor
-    public Customer(int icNum, String name, int age) {
+    public Customer(String icNum, String name, int age) {
         this.icNum = icNum;
         this.name = name;
         this.age = age;
     }
     // Group Setter
-    public void setCustomer(int icNum, String name, int age) {
+    public void setCustomer(String icNum, String name, int age) {
         this.icNum = icNum;
         this.name = name;
         this.age = age;
     }
     // Getters
-    public int getIC() {
+    public String getIC() {
         return this.icNum;
     }
     public String getName() {
@@ -34,7 +33,7 @@ public class Customer {
         return this.age;
     }
     // Setters
-    public void setIC(int newICNum) {
+    public void setIC(String newICNum) {
         this.icNum = newICNum;
     }
     public void setName(String newName) {
@@ -44,7 +43,7 @@ public class Customer {
         this.age = newAge;
     }
     // Printer
-    public String toString() { 
-        return("");
+    public String toStringCust() { 
+        return("IC Number: "+icNum+" | Name: "+name+" | Age: "+age);
     }
 }
