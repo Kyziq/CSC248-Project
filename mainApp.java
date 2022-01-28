@@ -39,7 +39,7 @@ public class mainApp {
         while(true) {
             displayMenu(1);
             int choice = input.nextInt();
-
+            int adib;
             if (choice == 1) 
             {
                 // Add
