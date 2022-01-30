@@ -407,6 +407,7 @@ public class mainApp {
             choice = input.nextInt();
         }
         input.close();
+        System.out.println("test!");
     }
 
     // functions
