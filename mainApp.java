@@ -136,11 +136,14 @@ public class mainApp {
             else if (choice == 2) // Remove
             {
                 
-                System.out.println("Which data you want to delete :");
-
+                System.out.println("Which data you want to delete?(1/2/3/...) :");
+                //test harith
+                //end test
                 input = new Scanner(System.in);
 
                 int del =  input.nextInt();
+                del = del-1;
+        
                 if (ticketType.equalsIgnoreCase("Normal")){
 
                     Customer custdelete = (Customer) normalTicketInfo.getFirst();
