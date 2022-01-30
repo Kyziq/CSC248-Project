@@ -56,6 +56,10 @@ public class mainApp {
         LinkedList paymentInfo = new LinkedList();
         LinkedList templink = new LinkedList();
 
+        // Queue 
+        Queue paymentNormalQueue = new Queue();
+        Queue paymentExpressQueue = new Queue();
+
         Scanner input = new Scanner(System.in);
         int index = 0;
 
@@ -119,6 +123,13 @@ public class mainApp {
                 Payment pay = new Payment (totalPayment, ticketType, dateTicket, datePurchased);
                 paymentInfo.insertAtFront(pay);
                 
+                if(ticketType.equalsIgnoreCase("Normal")){
+                    paymentNormalQueue.enqueue(name);
+                }
+                else if(ticketType.equalsIgnoreCase("Express")){
+                    paymentExpressQueue.enqueue(name);
+                }
+
                 continue;
             }
 
@@ -347,12 +358,47 @@ public class mainApp {
 
                 break; // Out from loop
             }
-            else if (choice == 4) {
+            else if (choice == 5) {
                 // Exit
                 System.out.println("Thank you!");
 
                 break; // Out from loop
             }
+
+            else if (choice == 4){ 
+                System.out.println("Which ticket do you want to see in ticket queue? (Front/Rear)");
+                String ticketQ = "";
+
+                input = new Scanner(System.in);
+                ticketQ = input.next();
+                
+                if (ticketType.equalsIgnoreCase("Normal")) {
+                   if (ticketQ.equalsIgnoreCase("Front"))
+                    {
+                        System.out.println(paymentNormalQueue.getFront());
+
+                    }
+                    else if(ticketQ.equalsIgnoreCase("Rear"))
+                    {
+                        System.out.println(paymentNormalQueue.getEnd());
+
+                    } 
+                }
+                
+                else if (ticketType.equalsIgnoreCase("Express")){
+                    if (ticketQ.equalsIgnoreCase("Front"))
+                    {
+                        System.out.println(paymentExpressQueue.getFront());
+
+                    }
+                    else if(ticketQ.equalsIgnoreCase("Rear"))
+                    {
+                        System.out.println(paymentExpressQueue.getEnd());
+                    }
+                }
+                continue;
+            }
+            
             displayMenu(2); // Continue display
 
             choice = input.nextInt();
@@ -368,8 +414,9 @@ public class mainApp {
             System.out.println("1- Add ticket");
             System.out.println("2- Remove ticket");
             System.out.println("3- Display data");
-            System.out.println("4- Exit program");
-            System.out.println("Input either 1, 2, 3 or 4");
+            System.out.println("4- Check ticket queue");
+            System.out.println("5- Exit program");
+            System.out.println("Input either 1, 2, 3, 4 or 5");
             System.out.println("------------------");
         }
         else if (menu == 2) {
@@ -378,8 +425,9 @@ public class mainApp {
             System.out.println("1- Add ticket");
             System.out.println("2- Remove ticket");
             System.out.println("3- Display data");
-            System.out.println("4- Exit program");
-            System.out.println("Input either 1, 2, 3 or 4");
+            System.out.println("4- Check ticket queue");
+            System.out.println("5- Exit program");
+            System.out.println("Input either 1, 2, 3, 4 or 5");
             System.out.println("------------------");
         }
     }
