@@ -11,7 +11,6 @@ public class Queue extends LinkedList {
 	}
 
 	public Object getFront() {
-		
 		return getFirst();
 	}
 	

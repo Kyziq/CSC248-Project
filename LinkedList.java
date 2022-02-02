@@ -18,8 +18,9 @@ public class LinkedList
 	{
 		Node newNode = new Node(data);
 		if (isEmpty())
-		{ first = newNode;
-		last = newNode;
+		{ 
+			first = newNode;
+			last = newNode;
 		}
 		else
 		{

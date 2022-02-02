@@ -1,5 +1,4 @@
 
-
 /*
 Genting SkyWorlds Theme Park offers great discount for entrance ticket during the school holiday.
  They provide two types of tickets, namely normal and express tickets. The advantage of 
@@ -26,7 +25,10 @@ b	The quantity of ticket bought by customer, listed according to type of ticket
 c	The date of the purchase and the date of the ticket purchased by customer
 d	The total amount to be paid after discount
 
+Show insert, modify, delete, and display data.
+
 */
+
 import java.util.Scanner;
 
 public class mainApp {
@@ -165,8 +167,8 @@ public class mainApp {
                 System.out.println("Which data you want to delete? Insert the ticket ID (????):");
                 int del =  input.nextInt();
                 
-                if (ticketType.equalsIgnoreCase("Normal")){
-
+                if (ticketType.equalsIgnoreCase("Normal"))
+                {
                     Customer custdelete = (Customer) normalTicketInfo.getFirst();
                 
                     while(custdelete.getTicketID() == del){
@@ -175,62 +177,60 @@ public class mainApp {
                     templink.insertAtFront(custdelete);
                 
                     Customer tempPrint = (Customer) normalTicketInfo.getFirst();
+                    Customer custprint = (Customer) templink.getFirst();
 
-                        while (tempPrint != null)  // To transfer elements from original linkedList to temporary linkedList
+                    while (tempPrint != null)  // To transfer elements from original linkedList to temporary linkedList
+                    {
+                        if (tempPrint.getTicketID() < del)
                         {
-                            if (tempPrint.getTicketID() < del)
-                            {
-                                templink.insertAtBack(tempPrint);
-                                //System.out.println("Ticket ID: "+GenerateRandom()+" | "+tempPrint.toStringCust()); //to check if it transfer the correct element
-                                tempPrint = (Customer) normalTicketInfo.getNext();
-                            } 
-                            else if (tempPrint.getTicketID() > del)
-                            {
-                                templink.insertAtBack(tempPrint);
-                                //System.out.println("Ticket ID: "+GenerateRandom()+" | "+tempPrint.toStringCust()); //to check if it transfer the correct element
-                                tempPrint = (Customer) normalTicketInfo.getNext();
-                            }
-
-                            else if (tempPrint.getTicketID() == del) 
-                            {
-                                tempPrint = (Customer) normalTicketInfo.getNext();
-                            }
+                            templink.insertAtBack(tempPrint);
+                            tempPrint = (Customer) normalTicketInfo.getNext();
+                        } 
+                        else if (tempPrint.getTicketID() > del)
+                        {
+                            templink.insertAtBack(tempPrint);
+                            tempPrint = (Customer) normalTicketInfo.getNext();
                         }
+                        else if (tempPrint.getTicketID() == del) 
+                        {
+                            tempPrint = (Customer) normalTicketInfo.getNext();
+                        }
+                    }
+                    templink.removeFromFront();
+                    normalTicketInfo.getFirst();
+
+                    while(!normalTicketInfo.isEmpty())
+                    {
+                        normalTicketInfo.removeFromFront();
+                    }
+
+                    while(custprint != null)
+                    {
+                        normalTicketInfo.insertAtBack(custprint);
+                        custprint = (Customer) templink.getNext();
+                    }
+                    while(!templink.isEmpty())
+                    {
                         templink.removeFromFront();
-                        normalTicketInfo.getFirst();
-
-                        while(!normalTicketInfo.isEmpty()){
-                            normalTicketInfo.removeFromFront();
-                        }
-
-                        Customer custprint = (Customer) templink.getFirst();
-                        
-                        while(custprint != null){
-                            normalTicketInfo.insertAtBack(custprint);
-                            custprint = (Customer) templink.getNext();
-                        }
-                        while(!templink.isEmpty()){
-                            templink.removeFromFront();
-                        }
-
-                        if (!normalTicketInfo.isEmpty()) // For normal tickets
+                    }
+                    if (!normalTicketInfo.isEmpty()) // For normal tickets
+                    {
+                        while (dataNormal != null)
                         {
-                            while (dataNormal != null)
-                             {
-                                Cus = (Customer) dataNormal;
-                                System.out.println(Cus.toStringCust());
-                                dataNormal= normalTicketInfo.getNext();
-                            }
-                         }
-                        else if (!expressTicketInfo.isEmpty()) // For express tickets
+                            Cus = (Customer) dataNormal;
+                            System.out.println(Cus.toStringCust());
+                            dataNormal= normalTicketInfo.getNext();
+                        }
+                    }
+                    else if (!expressTicketInfo.isEmpty()) // For express tickets
+                    {
+                        while (dataExpress != null)
                         {
-                            while (dataExpress != null)
-                            {
-                                Cus = (Customer) dataExpress;
-                                System.out.println(Cus.toStringCust());
-                                dataExpress= expressTicketInfo.getNext();
-                            }
-                         }
+                            Cus = (Customer) dataExpress;
+                            System.out.println(Cus.toStringCust());
+                            dataExpress= expressTicketInfo.getNext();
+                        }
+                    }
                 }
                 else if (ticketType.equalsIgnoreCase("Express"))
                 {
@@ -242,6 +242,7 @@ public class mainApp {
                     templink.insertAtFront(custdelete);
                 
                     Customer tempPrint = (Customer) expressTicketInfo.getFirst();
+                    Customer custprint = (Customer) templink.getFirst();
 
                     while (tempPrint != null)  // To transfer elements from original linkedList to temporary linkedList
                     {
@@ -258,25 +259,25 @@ public class mainApp {
                     templink.removeFromFront();
                     expressTicketInfo.getFirst();
 
-                    while(!expressTicketInfo.isEmpty()){
+                    while(!expressTicketInfo.isEmpty())
+                    {
                         expressTicketInfo.removeFromFront();
                     }
-
-                    Customer custprint = (Customer) templink.getFirst();
                     
                     // Transfer temporary to original
-                    while(custprint != null){
+                    while(custprint != null)
+                    {
                         expressTicketInfo.insertAtBack(custprint);
                         custprint = (Customer) templink.getNext();
                     }
-                    while(!templink.isEmpty()){
+                    while(!templink.isEmpty())
+                    {
                         templink.removeFromFront();
                     }
-            
                     if (!normalTicketInfo.isEmpty()) // For normal tickets
                     {
                         while (dataNormal != null)
-                            {
+                        {
                             Cus = (Customer) dataNormal;
                             System.out.println(Cus.toStringCust());
                             dataNormal= normalTicketInfo.getNext();
