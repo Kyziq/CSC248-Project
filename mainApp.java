@@ -137,8 +137,6 @@ public class mainApp {
             {
                 
                 System.out.println("Which data you want to delete?(1/2/3/...) :");
-                //test harith
-                //end test
                 input = new Scanner(System.in);
 
                 int del =  input.nextInt();
