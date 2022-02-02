@@ -1,4 +1,4 @@
-# Genting SkyWorlds Theme Park’s Entrance Ticket Processing
+## Genting SkyWorlds Theme Park’s Entrance Ticket Processing
 A program to book normal or express ticket(s) (Express tickets people does not have to wait in line) to enter Genting SkyWorlds Theme Park.
 This program also can calculate the total payment.
 Use LinkedList and Queue.
