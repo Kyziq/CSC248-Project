@@ -173,13 +173,11 @@ public class mainApp {
                     tempList.insertAtFront(custdelete);
 
                     // Delete the count head (calculation) for USER WANT delete
-                    if (custdelete.getAge() >= 2 && custdelete.getAge() < 18) {
+                    if (custdelete.getAge() >= 2 && custdelete.getAge() < 18) 
                         countChildren--;
-                    }
-                    else if(custdelete.getAge() >= 18 && custdelete.getAge() < 60) {
+                    else if(custdelete.getAge() >= 18 && custdelete.getAge() < 60) 
                         countAdult--;
-                    }
-
+                    
                     // Other than USER WANT (After front, 2nd, 3rd, ...)
                     Customer tempTransfer = (Customer) normalTicketInfo.getFirst();
                     while (tempTransfer != null)  // To transfer elements from original linkedList to temporary linkedList
@@ -210,7 +208,6 @@ public class mainApp {
                     // Clear temporary linked list
                     while(!tempList.isEmpty())
                         tempList.removeFromFront();
-
                 }
                 else if (ticketType.equalsIgnoreCase("Express")) // For express tickets
                 {
@@ -222,12 +219,10 @@ public class mainApp {
                     tempList.insertAtFront(custdelete);
                     
                     // Delete the count head (calculation) for USER WANT delete
-                    if (custdelete.getAge() >= 2 && custdelete.getAge() < 18) {
+                    if (custdelete.getAge() >= 2 && custdelete.getAge() < 18) 
                         countChildren--;
-                    }
-                    else if(custdelete.getAge() >= 18 && custdelete.getAge() < 60) {
+                    else if(custdelete.getAge() >= 18 && custdelete.getAge() < 60) 
                         countAdult--;
-                    }
 
                     // Other than USER WANT (After front, 2nd, 3rd, ...)
                     Customer tempTransfer = (Customer) expressTicketInfo.getFirst();
@@ -259,7 +254,6 @@ public class mainApp {
                     // Clear temporary linked list
                     while(!tempList.isEmpty())
                         tempList.removeFromFront();
-
                 }
                 continue;
             }
@@ -300,9 +294,15 @@ public class mainApp {
                 // Edit normal ticket type
                 if (ticketType.equalsIgnoreCase("Normal"))
                 {
-                    while(modifyCustNormal.getTicketID() != modify) {
+                    while(modifyCustNormal.getTicketID() != modify)
                         modifyCustNormal = (Customer) normalTicketInfo.getNext();
-                    }
+
+                    // Delete the count head (calculation) before 
+                    if (modifyCustNormal.getAge() >= 2 && modifyCustNormal.getAge() < 18)
+                        countChildren--;
+                    else if(modifyCustNormal.getAge() >= 18 && modifyCustNormal.getAge() < 60)
+                        countAdult--;
+                
                     System.out.println("Input new identification number (XXXXXX-XX-XXXX): ");
                     String icNum = input.next();
                     modifyCustNormal.setIC(icNum);
@@ -314,13 +314,25 @@ public class mainApp {
                     System.out.println("Input new age: ");
                     int age = input.nextInt();
                     modifyCustNormal.setAge(age);
+
+                    // Add the count head (calculation) after modified
+                    if (modifyCustNormal.getAge() >= 2 && modifyCustNormal.getAge() < 18) 
+                        countChildren++;
+                    else if(modifyCustNormal.getAge() >= 18 && modifyCustNormal.getAge() < 60) 
+                        countAdult++;
                 }
                 // Edit express ticket type
                 else if(ticketType.equalsIgnoreCase("Express"))
                 {
-                    while(modifyCustExpress.getTicketID() != modify) {
+                    while(modifyCustExpress.getTicketID() != modify)
                         modifyCustExpress = (Customer) expressTicketInfo.getNext();
-                    }
+
+                    // Delete the count head (calculation) before 
+                    if (modifyCustExpress.getAge() >= 2 && modifyCustExpress.getAge() < 18)
+                        countChildren--;
+                    else if(modifyCustExpress.getAge() >= 18 && modifyCustExpress.getAge() < 60)
+                        countAdult--;
+
                     System.out.println("Input new identification number (XXXXXX-XX-XXXX): ");
                     String icNum = input.next();
                     modifyCustExpress.setIC(icNum);
@@ -332,6 +344,12 @@ public class mainApp {
                     System.out.println("Input new age: ");
                     int age = input.nextInt();
                     modifyCustExpress.setAge(age);
+
+                    // Add the count head (calculation) after modified
+                    if (modifyCustExpress.getAge() >= 2 && modifyCustExpress.getAge() < 18) 
+                        countChildren++;
+                    else if(modifyCustExpress.getAge() >= 18 && modifyCustExpress.getAge() < 60) 
+                        countAdult++;
                 }
                 continue; // Continue loop
             }
