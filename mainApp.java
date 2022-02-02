@@ -142,8 +142,7 @@ public class mainApp {
                 input = new Scanner(System.in);
 
                 int del =  input.nextInt();
-                del = del-1;
-        
+                
                 if (ticketType.equalsIgnoreCase("Normal")){
 
                     Customer custdelete = (Customer) normalTicketInfo.getFirst();
