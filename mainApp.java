@@ -58,8 +58,7 @@ public class mainApp {
         // Linked Lists
         LinkedList normalTicketInfo = new LinkedList();
         LinkedList expressTicketInfo = new LinkedList();
-        LinkedList paymentInfo = new LinkedList();
-        LinkedList templink = new LinkedList();
+        LinkedList tempList = new LinkedList();
 
         // Queue 
         Queue paymentNormalQueue = new Queue();
@@ -68,7 +67,7 @@ public class mainApp {
         Scanner input = new Scanner(System.in);
 
         while(true) {
-            displayMenu(); // Intro display
+            displayMenu(); // Intro display, menu 1
 
             int choice = input.nextInt();
 
@@ -115,36 +114,33 @@ public class mainApp {
                     countAdult++;
                 }
 
+                // LinkedList data structure
                 Customer cust = new Customer (icNum, name, age, ticketID);
-                if(ticketType.equalsIgnoreCase("Normal"))
-                {
+                if(ticketType.equalsIgnoreCase("Normal")) {
                     normalTicketInfo.insertAtBack(cust);
                 }
-                else if(ticketType.equalsIgnoreCase("Express"))
-                {
+                else if(ticketType.equalsIgnoreCase("Express")) {
                     expressTicketInfo.insertAtBack(cust);
                 }
+
+                // Queue data structure
                 Payment pay = new Payment (totalPayment, ticketType, dateTicket, datePurchased);
-                paymentInfo.insertAtFront(pay);
-                
-                if(ticketType.equalsIgnoreCase("Normal")){
-                    paymentNormalQueue.enqueue(name);
+                if(ticketType.equalsIgnoreCase("Normal")) {
+                    paymentNormalQueue.enqueue(pay);
                 }
-                else if(ticketType.equalsIgnoreCase("Express")){
-                    paymentExpressQueue.enqueue(name);
+                else if(ticketType.equalsIgnoreCase("Express")) {
+                    paymentExpressQueue.enqueue(pay);
                 }
                 menuListCount++;
-
-                continue;
+                continue; // Continue loop
             }
-
             else if (choice == 2) // Remove
             {
                 Customer Cus = null;
                 Object dataNormal  = normalTicketInfo.getFirst();
                 Object dataExpress = expressTicketInfo.getFirst();
-        
-                // Show the datas
+
+                // Show the ticket data to remove which ticketID
                 if (!normalTicketInfo.isEmpty()) // For normal tickets
                 {
                     while (dataNormal != null)
@@ -163,202 +159,111 @@ public class mainApp {
                         dataExpress= expressTicketInfo.getNext();
                     }
                 }
-
                 System.out.println("Which data you want to delete? Insert the ticket ID (????):");
                 int del =  input.nextInt();
-                
-                if (ticketType.equalsIgnoreCase("Normal"))
+
+                // Delete stuff (linked list)
+                if (ticketType.equalsIgnoreCase("Normal")) // For normal tickets
                 {
                     Customer custdelete = (Customer) normalTicketInfo.getFirst();
-                
-                    while(custdelete.getTicketID() == del){
+
+                    // USER WANT (Insert linked list front)
+                    while(custdelete.getTicketID() != del)
                         custdelete = (Customer) normalTicketInfo.getNext();
-                    }
-                    templink.insertAtFront(custdelete);
-                
-                    Customer tempPrint = (Customer) normalTicketInfo.getFirst();
-                    Customer custprint = (Customer) templink.getFirst();
+                    tempList.insertAtFront(custdelete);
 
-                    while (tempPrint != null)  // To transfer elements from original linkedList to temporary linkedList
+                    // Delete the count head (calculation) for USER WANT delete
+                    if (custdelete.getAge() >= 2 && custdelete.getAge() < 18) {
+                        countChildren--;
+                    }
+                    else if(custdelete.getAge() >= 18 && custdelete.getAge() < 60) {
+                        countAdult--;
+                    }
+
+                    // Other than USER WANT (After front, 2nd, 3rd, ...)
+                    Customer tempTransfer = (Customer) normalTicketInfo.getFirst();
+                    while (tempTransfer != null)  // To transfer elements from original linkedList to temporary linkedList
                     {
-                        if (tempPrint.getTicketID() < del)
+                        if (tempTransfer.getTicketID() == del) // Except USER WANT
+                            tempTransfer = (Customer) normalTicketInfo.getNext();
+                        else
                         {
-                            templink.insertAtBack(tempPrint);
-                            tempPrint = (Customer) normalTicketInfo.getNext();
-                        } 
-                        else if (tempPrint.getTicketID() > del)
-                        {
-                            templink.insertAtBack(tempPrint);
-                            tempPrint = (Customer) normalTicketInfo.getNext();
-                        }
-                        else if (tempPrint.getTicketID() == del) 
-                        {
-                            tempPrint = (Customer) normalTicketInfo.getNext();
+                            tempList.insertAtBack(tempTransfer);
+                            tempTransfer = (Customer) normalTicketInfo.getNext();
                         }
                     }
-                    templink.removeFromFront();
+                    tempList.removeFromFront(); // Remove USER WANT
+
+                    // To clear original linked list
                     normalTicketInfo.getFirst();
-
                     while(!normalTicketInfo.isEmpty())
-                    {
                         normalTicketInfo.removeFromFront();
-                    }
 
+                    // To transfer from temporary to original
+                    Customer custprint = (Customer) tempList.getFirst();
                     while(custprint != null)
                     {
                         normalTicketInfo.insertAtBack(custprint);
-                        custprint = (Customer) templink.getNext();
+                        custprint = (Customer) tempList.getNext();
                     }
-                    while(!templink.isEmpty())
-                    {
-                        templink.removeFromFront();
-                    }
-                    if (!normalTicketInfo.isEmpty()) // For normal tickets
-                    {
-                        while (dataNormal != null)
-                        {
-                            Cus = (Customer) dataNormal;
-                            System.out.println(Cus.toStringCust());
-                            dataNormal= normalTicketInfo.getNext();
-                        }
-                    }
-                    else if (!expressTicketInfo.isEmpty()) // For express tickets
-                    {
-                        while (dataExpress != null)
-                        {
-                            Cus = (Customer) dataExpress;
-                            System.out.println(Cus.toStringCust());
-                            dataExpress= expressTicketInfo.getNext();
-                        }
-                    }
+
+                    // Clear temporary linked list
+                    while(!tempList.isEmpty())
+                        tempList.removeFromFront();
+
                 }
-                else if (ticketType.equalsIgnoreCase("Express"))
+                else if (ticketType.equalsIgnoreCase("Express")) // For express tickets
                 {
                     Customer custdelete = (Customer) expressTicketInfo.getFirst();
-                
-                    while(custdelete.getTicketID() == del) {
-                        custdelete = (Customer) expressTicketInfo.getNext();
-                    }
-                    templink.insertAtFront(custdelete);
-                
-                    Customer tempPrint = (Customer) expressTicketInfo.getFirst();
-                    Customer custprint = (Customer) templink.getFirst();
 
-                    while (tempPrint != null)  // To transfer elements from original linkedList to temporary linkedList
+                    // USER WANT (Insert linked list front)
+                    while(custdelete.getTicketID() != del)
+                        custdelete = (Customer) expressTicketInfo.getNext();
+                    tempList.insertAtFront(custdelete);
+                    
+                    // Delete the count head (calculation) for USER WANT delete
+                    if (custdelete.getAge() >= 2 && custdelete.getAge() < 18) {
+                        countChildren--;
+                    }
+                    else if(custdelete.getAge() >= 18 && custdelete.getAge() < 60) {
+                        countAdult--;
+                    }
+
+                    // Other than USER WANT (After front, 2nd, 3rd, ...)
+                    Customer tempTransfer = (Customer) expressTicketInfo.getFirst();
+                    while (tempTransfer != null)  // To transfer elements from original linkedList to temporary linkedList
                     {
-                        if (tempPrint.getTicketID() == del) 
-                        {
-                            tempPrint = (Customer) expressTicketInfo.getNext();
-                        }
+                        if (tempTransfer.getTicketID() == del) // Except USER WANT
+                            tempTransfer = (Customer) expressTicketInfo.getNext();
                         else
                         {
-                            templink.insertAtBack(tempPrint);
-                            tempPrint = (Customer) expressTicketInfo.getNext();
+                            tempList.insertAtBack(tempTransfer);
+                            tempTransfer = (Customer) expressTicketInfo.getNext();
                         }
                     }
-                    templink.removeFromFront();
-                    expressTicketInfo.getFirst();
+                    tempList.removeFromFront(); // Remove USER WANT
 
+                    // To clear original linked list
+                    expressTicketInfo.getFirst();
                     while(!expressTicketInfo.isEmpty())
-                    {
-                        expressTicketInfo.removeFromFront();
-                    }
-                    
-                    // Transfer temporary to original
+                    expressTicketInfo.removeFromFront();
+
+                    // To transfer from temporary to original
+                    Customer custprint = (Customer) tempList.getFirst();
                     while(custprint != null)
                     {
                         expressTicketInfo.insertAtBack(custprint);
-                        custprint = (Customer) templink.getNext();
+                        custprint = (Customer) tempList.getNext();
                     }
-                    while(!templink.isEmpty())
-                    {
-                        templink.removeFromFront();
-                    }
-                    if (!normalTicketInfo.isEmpty()) // For normal tickets
-                    {
-                        while (dataNormal != null)
-                        {
-                            Cus = (Customer) dataNormal;
-                            System.out.println(Cus.toStringCust());
-                            dataNormal= normalTicketInfo.getNext();
-                        }
-                    }
-                    else if (!expressTicketInfo.isEmpty()) // For express tickets
-                    {
-                        while (dataExpress != null)
-                        {
-                            Cus = (Customer) dataExpress;
-                            System.out.println(Cus.toStringCust());
-                            dataExpress= expressTicketInfo.getNext();
-                        }
-                    }
+
+                    // Clear temporary linked list
+                    while(!tempList.isEmpty())
+                        tempList.removeFromFront();
+
                 }
                 continue;
             }
-            else if (choice == 3) // Display
-            {
-                // Calculate Payment....
-                if(ticketType.equalsIgnoreCase("Normal"))
-                {
-                    totalPayment = (countChildren * childrenPriceNormal ) + ( countAdult * adultPriceNormal );
-
-                    if (totalPayment > 200)
-                        discount = 0.17;
-                    else
-                        discount = 0.10;
-
-                    totalPayment = totalPayment * (1 - discount);
-
-                    Payment pay = (Payment) paymentInfo.getFirst(); // Get Info
-                    pay.setTotalPayment(totalPayment);
-                }
-                else if(ticketType.equalsIgnoreCase("Express"))
-                {
-                    totalPayment = (countChildren * childrenPriceExpress ) + ( countAdult * adultPriceExpress );
-
-                    if (totalPayment > 200)
-                        discount = 0.17;
-                    else 
-                        discount = 0.10;
-
-                    totalPayment = totalPayment * (1 - discount);
-                }
-
-                System.out.println("Genting SkyWorlds Theme Park Ticket List");
-                Customer Cus = null;
-                Object dataNormal  = normalTicketInfo.getFirst();
-                Object dataExpress = expressTicketInfo.getFirst();
-                // Show the datas
-                if (!normalTicketInfo.isEmpty()) // For normal tickets
-                {
-                    while (dataNormal != null)
-                    {
-                        Cus = (Customer) dataNormal;
-                        System.out.println(Cus.toStringCust());
-                        dataNormal= normalTicketInfo.getNext();
-                    }
-                }
-                else if (!expressTicketInfo.isEmpty()) // For express tickets
-                {
-                    while (dataExpress != null)
-                    {
-                        Cus = (Customer) dataExpress;
-                        System.out.println(Cus.toStringCust());
-                        dataExpress= expressTicketInfo.getNext();
-                    }
-                }
-
-                //
-                Payment Pay = null;
-                Object dataPayment = paymentInfo.getFirst();
-
-                System.out.println("Payment Info ");
-                Pay = (Payment) dataPayment;
-                System.out.println(Pay.toStringPayment());
-
-                break; // Out from loop
-            }
-            else if (choice == 4) // Modify datas
+            else if (choice == 3) // Modify datas
             { 
                 // Modify data
                 Customer Cus = null;
@@ -428,47 +333,93 @@ public class mainApp {
                     int age = input.nextInt();
                     modifyCustExpress.setAge(age);
                 }
-                continue;
+                continue; // Continue loop
             }
+            else if (choice == 4) // Display
+            {
+                // Calculate Payment....
+                if(ticketType.equalsIgnoreCase("Normal"))
+                {
+                    // Total heads
+                    totalPayment = (countChildren * childrenPriceNormal) + (countAdult * adultPriceNormal);
 
-            /*else if (choice == 4)
-            { 
-                System.out.println("Which ticket do you want to see in ticket queue? (Front/Rear)");
-                String ticketQ = "";
+                    // Discount
+                    if (totalPayment > 200)
+                        discount = 0.17;
+                    else
+                        discount = 0.10;
+                    totalPayment = totalPayment * (1 - discount);
 
-                input = new Scanner(System.in);
-                ticketQ = input.next();
-                
-                if (ticketType.equalsIgnoreCase("Normal")) {
-                   if (ticketQ.equalsIgnoreCase("Front"))
-                    {
-                        System.out.println(paymentNormalQueue.getFront());
-                    }
-                    else if(ticketQ.equalsIgnoreCase("Rear"))
-                    {
-                        System.out.println(paymentNormalQueue.getEnd());
-                    } 
+                    // Insert data
+                    Payment pay = (Payment) paymentNormalQueue.getFront(); // Get normal queue
+                    pay.setTotalPayment(totalPayment);
                 }
-                
-                else if (ticketType.equalsIgnoreCase("Express")){
-                    if (ticketQ.equalsIgnoreCase("Front"))
+                else if(ticketType.equalsIgnoreCase("Express"))
+                {
+                    // Total heads
+                    totalPayment = (countChildren * childrenPriceExpress) + (countAdult * adultPriceExpress);
+
+                    // Discount
+                    if (totalPayment > 200)
+                        discount = 0.17;
+                    else
+                        discount = 0.10;
+                    totalPayment = totalPayment * (1 - discount);
+
+                    Payment pay = (Payment) paymentExpressQueue.getFront(); // Get express queue
+                    pay.setTotalPayment(totalPayment);
+                }
+                System.out.println("Genting SkyWorlds Theme Park Ticket List");
+
+                Customer Cus = null;
+                Object dataNormal  = normalTicketInfo.getFirst();
+                Object dataExpress = expressTicketInfo.getFirst();
+                // Show Customer tickets.
+                if (!normalTicketInfo.isEmpty()) // For normal tickets
+                {
+                    while (dataNormal != null)
                     {
-                        System.out.println(paymentExpressQueue.getFront());
-                    }
-                    else if(ticketQ.equalsIgnoreCase("Rear"))
-                    {
-                        System.out.println(paymentExpressQueue.getEnd());
+                        Cus = (Customer) dataNormal;
+                        System.out.println(Cus.toStringCust());
+                        dataNormal= normalTicketInfo.getNext();
                     }
                 }
-                continue;
-            }*/
-            else if (choice == 5) { // Exit program
-                // Exit
+                else if (!expressTicketInfo.isEmpty()) // For express tickets
+                {
+                    while (dataExpress != null)
+                    {
+                        Cus = (Customer) dataExpress;
+                        System.out.println(Cus.toStringCust());
+                        dataExpress= expressTicketInfo.getNext();
+                    }
+                }
+
+                // Show Payment datas.
+                Payment PayN = null;
+                Payment PayQ = null;
+                Object dataPaymentN = paymentNormalQueue.getFront();
+                Object dataPaymentQ = paymentExpressQueue.getFront();
+
+                System.out.println("Payment Info");
+                PayN = (Payment) dataPaymentN;
+                PayQ = (Payment) dataPaymentQ;
+
+                if (!paymentNormalQueue.isEmpty()) // For normal tickets
+                {
+                    System.out.println(PayN.toStringPayment());
+                }
+                else if (!expressTicketInfo.isEmpty()) // For express tickets
+                {
+                    System.out.println(PayQ.toStringPayment());
+                }
+                break; // Out from loop
+            }
+            else if (choice == 5) {
+                // Exit program
                 System.out.println("Thank you for using this program!");
                 break; // Out from loop
             }
             displayMenu(); // Continue display
-
             choice = input.nextInt();
         }
         input.close();
@@ -481,8 +432,8 @@ public class mainApp {
             System.out.println("Main Menu");
             System.out.println("1- Add ticket");
             System.out.println("2- Remove ticket");
-            System.out.println("3- Display ticket");
-            System.out.println("4- Modify ticket");
+            System.out.println("3- Modify ticket");
+            System.out.println("4- Display ticket");
             System.out.println("5- Exit program");
             System.out.println("Input either 1, 2, 3, 4 or 5");
             System.out.println("------------------");
@@ -492,8 +443,8 @@ public class mainApp {
             System.out.println("Main Menu");
             System.out.println("1- Add ticket");
             System.out.println("2- Remove ticket");
-            System.out.println("3- Display ticket");
-            System.out.println("4- Modify ticket");
+            System.out.println("3- Modify ticket");
+            System.out.println("4- Display ticket");
             System.out.println("5- Exit program");
             System.out.println("Input either 1, 2, 3, 4 or 5");
             System.out.println("------------------");
