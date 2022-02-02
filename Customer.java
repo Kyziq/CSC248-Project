@@ -3,28 +3,28 @@ public class Customer {
     private String icNum; 
     private String name; 
     private int age; // Baby - <2 years, Children - 2-17years, Adult - 18-59years, Senior Adult - 60+years
-    private int index;
+    private int ticketID;
 
     // Default Constructor
     public Customer() {
         icNum = "";
         name = "";
         age = -1;
-        index = 1;
+        ticketID = -1;
     }
     // Normal Constructor
-    public Customer(String icNum, String name, int age, int index) {
+    public Customer(String icNum, String name, int age, int ticketID) {
         this.icNum = icNum;
         this.name = name;
         this.age = age;
-        this.index = index;
+        this.ticketID = ticketID;
     }
     // Group Setter
-    public void setCustomer(String icNum, String name, int age, int index) {
+    public void setCustomer(String icNum, String name, int age, int ticketID) {
         this.icNum = icNum;
         this.name = name;
         this.age = age;
-        this.index = index;
+        this.ticketID = ticketID;
     }
     // Getters
     public String getIC() {
@@ -36,8 +36,8 @@ public class Customer {
     public int getAge() {
         return this.age;
     }
-    public int getIndex(){
-        return this.index;
+    public int getTicketID(){
+        return this.ticketID;
     }
     // Setters
     public void setIC(String newICNum) {
@@ -49,11 +49,11 @@ public class Customer {
     public void setAge(int newAge) {
         this.age = newAge;
     }
-    public void setIndex(int newIndex){
-        this.index = newIndex;
+    public void setTicketID(int newTicketID){
+        this.ticketID = newTicketID;
     }
     // Printer
     public String toStringCust() { 
-        return( "No " + index +" | IC Number: "+icNum+" | Name: "+name+" | Age: "+age);
+        return( "Ticket ID: " + ticketID +" | IC Number: "+icNum+" | Name: "+name+" | Age: "+age);
     }
 }

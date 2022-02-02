@@ -1,6 +1,6 @@
 ## Genting SkyWorlds Theme Park’s Entrance Ticket Processing
 A program to book normal or express ticket(s) (Express tickets people does not have to wait in line) to enter Genting SkyWorlds Theme Park.
-This program also can calculate the total payment.
+This program also can calculate the total payment and edit the data inserted such as name, IC number and age.
 Use LinkedList and Queue data structures.
 
 ## Team Members
