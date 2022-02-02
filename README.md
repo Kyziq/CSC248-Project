@@ -10,4 +10,4 @@ Use LinkedList and Queue.
 * [Syahril Rumizam](https://github.com/reason61)
 
 ## Acknowledgment
-* Thank you Sir Ahmad Afif for teaching us JAVA language this semester. We truly appreciate it
+* Thank you Dr. Taniza Tajuddin for teaching us CSC248 (FUNDAMENTALS OF DATA STRUCTURES) this semester.
