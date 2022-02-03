@@ -1,13 +1,10 @@
-import java.text.DecimalFormat;
+import java.io.PrintStream;
 
 public class Payment {
     private double totalPayment; 
     private String ticketType;
     private String dateTicket;
     private String datePurchased; 
-
-    // Total payment in form of RMX.XX
-    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     // Default Constructor
     public Payment() {
@@ -50,7 +47,9 @@ public class Payment {
     public void setDatePurchased(String datePurchased) {
         this.datePurchased = datePurchased;
     }
-    public String toStringPayment() { 
-        return("Total Payment: RM"+df.format(totalPayment)+" | Ticket Type: "+ticketType+" | Date Ticket: "+dateTicket+" | Date Purchased: "+datePurchased);
+
+    // Printer
+    public PrintStream PaymentPrint() {
+        return System.out.printf("Total Payment: RM%.2f | Ticket Type: %S | Date Ticket: %s | Date Purchased: %s %n", totalPayment, ticketType, dateTicket, datePurchased);
     }
 }

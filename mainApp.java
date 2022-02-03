@@ -31,9 +31,16 @@ Show insert, modify, delete, and display data.
 
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class mainApp {
     // Global Variable
     static int menuListCount=1;
+    static String menuChoice2; static int menuChoice;
+    // Input
+    static JFrame f = new JFrame();   
+    static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) 
     {
@@ -64,19 +71,14 @@ public class mainApp {
         Queue paymentNormalQueue = new Queue();
         Queue paymentExpressQueue = new Queue();
 
-        Scanner input = new Scanner(System.in);
-
         while(true) {
             displayMenu(); // Intro display, menu 1
 
-            int choice = input.nextInt();
-
-            if (choice == 1) // Add ticket
+            if (menuChoice == 1) // Add ticket
             {
                 if (ticketType.isEmpty()) {
                     do {
-                        System.out.println("Do you prefer to buy (Normal) ticket or (Express) ticket");
-                        ticketType = input.next();
+                        ticketType = JOptionPane.showInputDialog(f,"Do you prefer to buy (Normal) ticket or (Express) ticket?");     
         
                         if (!ticketType.equalsIgnoreCase("Normal") && !ticketType.equalsIgnoreCase("Express")) {
                             System.out.println("Invalid!");
@@ -86,23 +88,19 @@ public class mainApp {
                 }
 
                 if (dateTicket.isEmpty()) {
-                    System.out.println("Input date of ticket (YYYY-MM-DD): ");
-                    dateTicket = input.next();
+                    dateTicket = JOptionPane.showInputDialog(f,"Input date of ticket (YYYY-MM-DD): ");      
                 }
 
                 if (datePurchased.isEmpty()) {
-                    System.out.println("Input date of ticket purchased (YYYY-MM-DD): ");
-                    datePurchased = input.next();
+                    datePurchased = JOptionPane.showInputDialog(f,"Input date of ticket purchased (YYYY-MM-DD): ");      
                 }
- 
-                System.out.println("Input identification number (XXXXXX-XX-XXXX): ");
-                String icNum = input.next();
 
-                System.out.println("Input the name: ");
-                String name = input.next();
+                String icNum = JOptionPane.showInputDialog(f,"Input identification number (XXXXXX-XX-XXXX): ");   
 
-                System.out.println("Input the age: ");
-                int age = input.nextInt();
+                String name = JOptionPane.showInputDialog(f,"Input the name: ");   
+
+                String age2 = JOptionPane.showInputDialog(f,"Input the age: ");   
+                int age = Integer.parseInt(age2);
 
                 int ticketID = GenerateRandom();
 
@@ -134,7 +132,7 @@ public class mainApp {
                 menuListCount++;
                 continue; // Continue loop
             }
-            else if (choice == 2) // Remove
+            else if (menuChoice == 2) // Remove
             {
                 Customer Cus = null;
                 Object dataNormal  = normalTicketInfo.getFirst();
@@ -146,7 +144,7 @@ public class mainApp {
                     while (dataNormal != null)
                     {
                         Cus = (Customer) dataNormal;
-                        System.out.println(Cus.toStringCust());
+                        Cus.CustomerPrint();
                         dataNormal= normalTicketInfo.getNext();
                     }
                 }
@@ -155,12 +153,12 @@ public class mainApp {
                     while (dataExpress != null)
                     {
                         Cus = (Customer) dataExpress;
-                        System.out.println(Cus.toStringCust());
+                        Cus.CustomerPrint();
                         dataExpress= expressTicketInfo.getNext();
                     }
                 }
-                System.out.println("Which data you want to delete? Insert the ticket ID (????):");
-                int del =  input.nextInt();
+                String del2 = JOptionPane.showInputDialog(f,"Which data you want to delete? Insert the ticket ID (????): ");   
+                int del = Integer.parseInt(del2);
 
                 // Delete stuff (linked list)
                 if (ticketType.equalsIgnoreCase("Normal")) // For normal tickets
@@ -257,7 +255,7 @@ public class mainApp {
                 }
                 continue;
             }
-            else if (choice == 3) // Modify datas
+            else if (menuChoice == 3) // Modify datas
             { 
                 // Modify data
                 Customer Cus = null;
@@ -270,7 +268,7 @@ public class mainApp {
                     while (dataNormal != null)
                     {
                         Cus = (Customer) dataNormal;
-                        System.out.println(Cus.toStringCust());
+                        Cus.CustomerPrint();
                         dataNormal= normalTicketInfo.getNext();
                     }
                 }
@@ -279,14 +277,14 @@ public class mainApp {
                     while (dataExpress != null)
                     {
                         Cus = (Customer) dataExpress;
-                        System.out.println(Cus.toStringCust());
+                        Cus.CustomerPrint();
                         dataExpress= expressTicketInfo.getNext();
                     }
                 }
 
-                //
-                System.out.println("Which ticket do you want to modify? Insert the ticket ID (????): ");
-                int modify =  input.nextInt();
+                // Input
+                String modify2 = JOptionPane.showInputDialog(f,"Which ticket do you want to modify? Insert the ticket ID (????): ");   
+                int modify = Integer.parseInt(modify2);
 
                 Customer modifyCustNormal = (Customer) normalTicketInfo.getFirst();
                 Customer modifyCustExpress = (Customer) normalTicketInfo.getFirst();
@@ -303,16 +301,14 @@ public class mainApp {
                     else if(modifyCustNormal.getAge() >= 18 && modifyCustNormal.getAge() < 60)
                         countAdult--;
                 
-                    System.out.println("Input new identification number (XXXXXX-XX-XXXX): ");
-                    String icNum = input.next();
+                    String icNum= JOptionPane.showInputDialog(f,"Input new identification number (XXXXXX-XX-XXXX): ");   
                     modifyCustNormal.setIC(icNum);
 
-                    System.out.println("Input new name: ");
-                    String name = input.next();
+                    String name= JOptionPane.showInputDialog(f,"Input new name: ");  
                     modifyCustNormal.setName(name);
     
-                    System.out.println("Input new age: ");
-                    int age = input.nextInt();
+                    String age2= JOptionPane.showInputDialog(f,"Input new age: ");  
+                    int age = Integer.parseInt(age2);
                     modifyCustNormal.setAge(age);
 
                     // Add the count head (calculation) after modified
@@ -333,16 +329,14 @@ public class mainApp {
                     else if(modifyCustExpress.getAge() >= 18 && modifyCustExpress.getAge() < 60)
                         countAdult--;
 
-                    System.out.println("Input new identification number (XXXXXX-XX-XXXX): ");
-                    String icNum = input.next();
+                    String icNum= JOptionPane.showInputDialog(f,"Input new identification number (XXXXXX-XX-XXXX): ");   
                     modifyCustExpress.setIC(icNum);
 
-                    System.out.println("Input new name: ");
-                    String name = input.next();
+                    String name= JOptionPane.showInputDialog(f,"Input new name: ");  
                     modifyCustExpress.setName(name);
     
-                    System.out.println("Input new age: ");
-                    int age = input.nextInt();
+                    String age2= JOptionPane.showInputDialog(f,"Input new age: ");  
+                    int age = Integer.parseInt(age2);
                     modifyCustExpress.setAge(age);
 
                     // Add the count head (calculation) after modified
@@ -353,7 +347,7 @@ public class mainApp {
                 }
                 continue; // Continue loop
             }
-            else if (choice == 4) // Display
+            else if (menuChoice == 4) // Display
             {
                 // Calculate Payment....
                 if(ticketType.equalsIgnoreCase("Normal"))
@@ -387,8 +381,11 @@ public class mainApp {
                     Payment pay = (Payment) paymentExpressQueue.getFront(); // Get express queue
                     pay.setTotalPayment(totalPayment);
                 }
-                System.out.println("Genting SkyWorlds Theme Park Ticket List");
-
+                System.out.printf("");
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                System.out.println("\t\t\tGenting SkyWorlds Theme Park Ticket List");
+                System.out.printf("----------------------------------------------------------------------------------------------------\n");
+                
                 Customer Cus = null;
                 Object dataNormal  = normalTicketInfo.getFirst();
                 Object dataExpress = expressTicketInfo.getFirst();
@@ -398,7 +395,7 @@ public class mainApp {
                     while (dataNormal != null)
                     {
                         Cus = (Customer) dataNormal;
-                        System.out.println(Cus.toStringCust());
+                        Cus.CustomerPrint();
                         dataNormal= normalTicketInfo.getNext();
                     }
                 }
@@ -407,7 +404,7 @@ public class mainApp {
                     while (dataExpress != null)
                     {
                         Cus = (Customer) dataExpress;
-                        System.out.println(Cus.toStringCust());
+                        Cus.CustomerPrint();
                         dataExpress= expressTicketInfo.getNext();
                     }
                 }
@@ -418,54 +415,63 @@ public class mainApp {
                 Object dataPaymentN = paymentNormalQueue.getFront();
                 Object dataPaymentQ = paymentExpressQueue.getFront();
 
-                System.out.println("Payment Info");
+                System.out.println("");
+                System.out.println("----------------------------------------------------------------------------------------------------");
+                System.out.print("\n\t\t\t\t\tPayment Info\n");
+                System.out.println("----------------------------------------------------------------------------------------------------");
+        
                 PayN = (Payment) dataPaymentN;
                 PayQ = (Payment) dataPaymentQ;
 
                 if (!paymentNormalQueue.isEmpty()) // For normal tickets
                 {
-                    System.out.println(PayN.toStringPayment());
+                    PayN.PaymentPrint();
                 }
                 else if (!expressTicketInfo.isEmpty()) // For express tickets
                 {
-                    System.out.println(PayQ.toStringPayment());
+                    PayQ.PaymentPrint();
                 }
+                System.out.println("----------------------------------------------------------------------------------------------------\n");
+                System.out.println("Thank you for using this program!\n");
                 break; // Out from loop
             }
-            else if (choice == 5) {
+            else if (menuChoice == 5) {
                 // Exit program
-                System.out.println("Thank you for using this program!");
+                System.out.println("Thank you for using this program!\n");
                 break; // Out from loop
             }
             displayMenu(); // Continue display
-            choice = input.nextInt();
         }
         input.close();
     }
 
+
+
     // functions
     private static void displayMenu() {
-        if (menuListCount == 1) {
-            System.out.println("Welcome to Genting SkyWorlds Theme Park!");
-            System.out.println("Main Menu");
-            System.out.println("1- Add ticket");
-            System.out.println("2- Remove ticket");
-            System.out.println("3- Modify ticket");
-            System.out.println("4- Display ticket");
-            System.out.println("5- Exit program");
-            System.out.println("Input either 1, 2, 3, 4 or 5");
-            System.out.println("------------------");
+        if (menuListCount == 1) 
+        {
+            menuChoice2= JOptionPane.showInputDialog(null,
+            "Main Menu\n"+
+            "1- Add ticket\n"+
+            "2- Remove ticket\n"+
+            "3- Modify ticket\n"+
+            "4- Display ticket\n"+
+            "5- Exit program\n"+
+            "Input either 1, 2, 3, 4 or 5", "Welcome to Genting SkyWorlds Theme Park!", JOptionPane.QUESTION_MESSAGE);
+            menuChoice = Integer.parseInt(menuChoice2);
         }
-        else if (menuListCount >= 2) {
-            System.out.println("Do you want to do anything else?");
-            System.out.println("Main Menu");
-            System.out.println("1- Add ticket");
-            System.out.println("2- Remove ticket");
-            System.out.println("3- Modify ticket");
-            System.out.println("4- Display ticket");
-            System.out.println("5- Exit program");
-            System.out.println("Input either 1, 2, 3, 4 or 5");
-            System.out.println("------------------");
+        else if (menuListCount >= 2) 
+        {
+            menuChoice2= JOptionPane.showInputDialog(null,
+            "Main Menu\n"+
+            "1- Add ticket\n"+
+            "2- Remove ticket\n"+
+            "3- Modify ticket\n"+
+            "4- Display ticket\n"+
+            "5- Exit program\n"+
+            "Input either 1, 2, 3, 4 or 5", "Do you want to do anything else?", JOptionPane.QUESTION_MESSAGE);
+            menuChoice = Integer.parseInt(menuChoice2);
         }
     }
 

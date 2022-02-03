@@ -1,3 +1,5 @@
+import java.io.PrintStream;
+
 // Customer Info
 public class Customer {
     private String icNum; 
@@ -53,7 +55,7 @@ public class Customer {
         this.ticketID = newTicketID;
     }
     // Printer
-    public String toStringCust() { 
-        return( "Ticket ID: " + ticketID +" | IC Number: "+icNum+" | Name: "+name+" | Age: "+age);
+    public PrintStream CustomerPrint() {
+        return System.out.printf("Ticket ID: %d | IC Number: %-20s | Name: %-20S | Age: %d %n", ticketID, icNum, name, age);
     }
 }
